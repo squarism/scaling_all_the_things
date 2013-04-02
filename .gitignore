@@ -48,3 +48,6 @@ tmp
 .yardoc
 _yardoc
 doc/
+
+*~
+*.hi
