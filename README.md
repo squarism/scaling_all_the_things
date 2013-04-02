@@ -1,21 +1,17 @@
 ## Let's Kill Some Computers.
-This project aims to compare the performance of different languages.  There are many things wrong with this idea but I don't care.  I want to know when and where different things throw up in your face.
+ 
+ - Make an array of n-length.  `[0, 1, 2, 3 …]`.
+ - Start at 1 million.
+ - Go to 1 billion.
+ - No tricks like lazy loading or enums.  Really create it the array, list, whatever your languages calls it.
 
-For example, make a list of numbers 0 to 1 billion.  Like `[0, 1, 2, 3 …]`.  You'd think this would be trivial but it's not in some cases.  I realized this in my favorite language Ruby.  You really can't just 'do it'.  You have to be careful and specific.
+You'd think this would be trivial but it's not in some cases.  I realized this in my favorite language Ruby.  You really can't just 'do it'.  You have to be careful and specific about memory usage.  You can't just toss in one billion objects.  They need to be small ints or something tiny.
 
-The tests:
+The timing portions of these tests are solely around the creation of the array and not warm-up, tear-down, printing or anything outside the data structure creation.
 
-- Arrays (for example arrays.js, arrays.py, arrays.scala, arrays.rb) counts from 0 to different large numbers and keeps the iteration.  The timing portion is solely around the creation of the array.
-
-Some functional experiments popped up along the way, for example in the simple Array test.
-
-- How do you get a command line argument?  (For the size of the array)
-- How do you compute elapsed time?
-- If you get milliseconds for time, how do you compute minutes or seconds elapsed?
-- How do you do string interpolation for printing the results nicely?
-- How do you print an array's length?
 
 ## Just Show Me the Results
+	
     In format mins:secs.millis
 	+-----------+-------+-------+-------+-----------+
 	| language  |  1M   |  10M  | 100M  |    1B     |
@@ -46,10 +42,10 @@ Some functional experiments popped up along the way, for example in the simple A
 Here's a log of all the fun I had.
 
 ### C
-C was a PITA compared to the higher level languages.  But, no big surprise, was very fast.  Non-optimized (-O2) compilation was slower than Scala but then O2 made it faster than Scala.
+C was a PITA compared to the higher level languages.  But, no big surprise, was very fast.  Non-optimized (-O2) compilation was slower than Scala but then O2 made it faster than Scala.  I am more than willing to accept a better version of this test.  Especially one that dynamically allocates.
 
 ### Python
-Used 32gb of memory (much of it swap) on a 24gb machine.  Never completed after 10+ minutes.  It ran 100m ok.  Most languages seem to really start to show their limits at 100m+.
+Used 32gb of memory (much of it swap) on a 24gb machine.  Never completed after 10+ minutes.  It ran 100m ok.
 
 ### Scala
 Ran out of memory on 1B elements using ArrayBuffer but using ListBuffer not only ran in 3gb on my laptop but also ran with both cores automatically?
@@ -86,3 +82,12 @@ Had to use pure Ints.
 
     // this method didn't work either, ArrayBuffer is too slow
     val array = ArrayBuffer.empty[Int]
+
+### Misc
+Some learning experiments popped up along the way.  Even just doing this simple test it was interesting all the problems that had to be solved.
+
+- How do you get a command line argument?  (For the size of the array)
+- How do you compute elapsed time?
+- If you get milliseconds for time, how do you compute minutes or seconds elapsed?
+- How do you do string interpolation for printing the results nicely?
+- How do you print an array's length?
