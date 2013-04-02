@@ -1,4 +1,4 @@
-## Where am I.
+## Let's Kill Some Computers.
 This project aims to compare the performance of different languages.  There are many things wrong with this idea but I don't care.  I want to know when and where different things throw up in your face.
 
 For example, make a list of numbers 0 to 1 billion.  Like `[0, 1, 2, 3 …]`.  You'd think this would be trivial but it's not in some cases.  I realized this in my favorite language Ruby.  You really can't just 'do it'.  You have to be careful and specific.
