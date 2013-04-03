@@ -17,6 +17,7 @@ The timing portions of these tests are solely around the creation of the array a
     | language  |  1M   |  10M  | 100M  |    1B     |
     +-----------+-------+-------+-------+-----------+
     | C         | 0.006 | 0.079 | 0.757 | 7.678     |
+    | Go        | 0.031 | 0.302 | 2.850 | DNF       |
     | Haskell   | 0.021 | 0.135 | 1.259 | 12.528    |
     | Node (JS) | 0.117 | 2.280 | DNF   | DNF       |
     | Python    | 0.993 | 2.932 | 25.25 | DNF       |
@@ -26,6 +27,9 @@ The timing portions of these tests are solely around the creation of the array a
 
 	Notes:
      C - gcc -O2, llvm compiling was no faster
+     Go - includes entire program time (TODO)
+       DNF 1B test - unexpected fault address 0x41e01d000
+     Haskell - includes entire program time (TODO)
      Node - proccesses limited to 1gb, did not finish > 10 million
      Python - Used 32gb of RAM and DNF after 10+ minutes on 1 billion
      Ruby - used about 8gb
