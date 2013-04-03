@@ -1,34 +1,63 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <limits.h>
+#include <errno.h>
+
 /*
- * TODO:
- * 1) Add command line argument capability.
- * 2) Calculate time in millis.
+ *
+ * 1) Added command line argument capability.
+ * 2) Calculating elapsed time in millis.
  *
  * */
 
-int main (int argc, char* argv[]) {
-  unsigned long max = atoi(argv[1]);
+int main(int argc, char *argv[])
+{
+  int base;
+  char *endptr, *str;
+  unsigned long long max;
 
-  time_t start_time, end_time;
-  char* c_time_string;
+  if (argc < 2) {
+      fprintf(stderr, "Usage: %s str [base]\n", argv[0]);
+      exit(EXIT_FAILURE);
+  }
 
-  start_time = time(NULL);
+  str = argv[1];
+  base = (argc > 2) ? atoi(argv[2]) : 10;
 
-  unsigned long *array;
-  array = malloc(max * sizeof(unsigned long));
-  unsigned long i;
+  errno = 0;
+  max = strtol(str, &endptr, base);
+
+  if ((errno == ERANGE && (max == LONG_MAX || max == LONG_MIN))
+          || (errno != 0 && max == 0)) {
+      perror("strtol");
+      exit(EXIT_FAILURE);
+  }
+
+  if (endptr == str) {
+      fprintf(stderr, "No digits were found\n");
+      exit(EXIT_FAILURE);
+  }
+
+  if (*endptr != '\0')        /* Not necessarily an error... */
+      printf("Further characters after number: %s\n", endptr);
+
+  struct timeval tim;
+  gettimeofday(&tim, NULL);
+  double t1=tim.tv_sec+(tim.tv_usec/1000000.0);
+
+  unsigned long long *array;
+  array = malloc(max * sizeof(unsigned long long));
+  unsigned long long i;
   for(i=0;i<max;i++){
     array[i] = i;
   }
   free(array);
 
-  end_time = time(NULL);
-  c_time_string = ctime(&start_time);
-  printf("Start time: %s", c_time_string);
-  c_time_string = ctime(&end_time);
-  printf("  End time: %s", c_time_string);
-  double diffs = difftime(end_time, start_time);
-  printf("Loaded %lu elements into an array in %f seconds.\n", max, diffs);
+  gettimeofday(&tim, NULL);
+  double t2=tim.tv_sec+(tim.tv_usec/1000000.0);
+
+  printf("Loaded %lu elements into an array in %.6lf seconds.\n", max, t2-t1);
+
+  exit(EXIT_SUCCESS);
 }
