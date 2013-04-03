@@ -13,15 +13,16 @@ The timing portions of these tests are solely around the creation of the array a
 ## Just Show Me the Results
 
     In format mins:secs.millis
-	+-----------+-------+-------+-------+-----------+
-	| language  |  1M   |  10M  | 100M  |    1B     |
-	+-----------+-------+-------+-------+-----------+
-	| C         | 0.006 | 0.079 | 0.757 | 7.678     |
-	| Node (JS) | 0.117 | 2.280 | DNF   | DNF       |
-	| Python    | 0.993 | 2.932 | 25.25 | DNF       |
-	| Ruby      | 0.132 | 1.246 | 13.73 | 01:50.980 |
-	| Scala     | 0.004 | 0.013 | 1.005 | 9.056     |
-	+-----------+-------+-------+-------+-----------+
+    +-----------+-------+-------+-------+-----------+
+    | language  |  1M   |  10M  | 100M  |    1B     |
+    +-----------+-------+-------+-------+-----------+
+    | C         | 0.006 | 0.079 | 0.757 | 7.678     |
+    | Haskell   | 0.021 | 0.135 | 1.259 | 12.528    |
+    | Node (JS) | 0.117 | 2.280 | DNF   | DNF       |
+    | Python    | 0.993 | 2.932 | 25.25 | DNF       |
+    | Ruby      | 0.132 | 1.246 | 13.73 | 01:50.980 |
+    | Scala     | 0.004 | 0.013 | 1.005 | 9.056     |
+    +-----------+-------+-------+-------+-----------+
 
 	Notes:
      C - gcc -O2, llvm compiling was no faster
@@ -32,6 +33,7 @@ The timing portions of these tests are solely around the creation of the array a
 
     Versions:
      C - gcc version 4.2.1 (test compiled with -O2)
+     Haskell - 7.4.2, code was compiled and run (ghc)
      Node - v0.10.2
      Python - 2.7.2
      Ruby - 1.9.3p385
@@ -41,8 +43,12 @@ The timing portions of these tests are solely around the creation of the array a
 ## Notes
 Here's a log of all the fun I had.
 
-### C
+### C (contributed by @regexer)
 C was a PITA compared to the higher level languages.  But, no big surprise, was very fast.  Non-optimized (-O2) compilation was slower than Scala but then O2 made it faster than Scala.  I am more than willing to accept a better version of this test.  Especially one that dynamically allocates.
+
+### Haskell (contributed by @sixohsix)
+Using an array-based implementation is not faster. Probably because you have to iterate 1B times to fill the array, just like the list. It may be better on memory though.
+The ghc interpreter is surprisingly capable of doing this.
 
 ### Python
 Used 32gb of memory (much of it swap) on a 24gb machine.  Never completed after 10+ minutes.  It ran 100m ok.
