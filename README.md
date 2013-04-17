@@ -30,7 +30,7 @@ The timing portions of these tests are solely around the creation of the array a
      Go - includes entire program time (TODO)
        DNF 1B test - unexpected fault address 0x41e01d000
      Haskell - includes entire program time (TODO)
-     Node - proccesses limited to 1gb, did not finish > 10 million
+     Node - processes limited to 1gb, did not finish > 10 million
      Python - Used 32gb of RAM and DNF after 10+ minutes on 1 billion
      Ruby - used about 8gb
      Scala - Had to set -Xmx8g for 1billion run
