@@ -3,7 +3,7 @@
  - Make an array of n-length.  `[0, 1, 2, 3 …]`.
  - Start at 1 million.
  - Go to 1 billion.
- - No tricks like lazy loading or enums.  Really create it the array, list, whatever your languages calls it.
+ - No tricks like lazy loading or enums.  Really create it the array, slice, list, whatever your languages calls it.
 
 You'd think this would be trivial but it's not in some cases.  I realized this in my favorite language Ruby.  You really can't just 'do it'.  You have to be careful and specific about memory usage.  You can't just toss in one billion objects.  They need to be small ints or something tiny.
 
