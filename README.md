@@ -17,7 +17,7 @@ The timing portions of these tests are solely around the creation of the array a
     | language  |  1M   |  10M  | 100M  |    1B     |
     +-----------+-------+-------+-------+-----------+
     | C         | 0.006 | 0.079 | 0.757 | 7.678     |
-    | Go        | 0.031 | 0.302 | 2.850 | DNF       |
+    | Go        | 0.032 | 0.288 | 2.794 | 26.124    |
     | Haskell   | 0.021 | 0.135 | 1.259 | 12.528    |
     | Node.js   | 0.117 | 2.280 | DNF   | DNF       |
     | Perl      | 0.223 | 2.329 | 21.46 | 08:11.19  |
@@ -28,8 +28,7 @@ The timing portions of these tests are solely around the creation of the array a
 
 	Notes:
      C - gcc -O2, llvm compiling was no faster
-     Go - includes entire program time (TODO)
-       DNF 1B test - unexpected fault address 0x41e01d000
+     Go - includes entire program time (TODO), now finishes with go1.1 (64-bit)
      Haskell - includes entire program time (TODO)
      Node - processes limited to 1.7gb, did not finish > 10 million
      Perl - used 32.9gb of virtual ram, had a hard time cleaning up
@@ -40,7 +39,7 @@ The timing portions of these tests are solely around the creation of the array a
 
     Versions:
      C - gcc version 4.2.1 (test compiled with -O2)
-     Go - 1.0.3
+     Go - 1.1 darwin/amd64
      Haskell - 7.4.2, code was compiled and run (ghc)
      Node.js - v0.10.2
      Perl - v5.12.4
