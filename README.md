@@ -17,6 +17,7 @@ The timing portions of these tests are solely around the creation of the array a
     | language  |  1M   |  10M  | 100M  |    1B     |
     +-----------+-------+-------+-------+-----------+
     | C         | 0.006 | 0.079 | 0.757 | 7.678     |
+    | Crystal   | 0.066 | 0.508 | 6.038 | Seg Fault |
     | Go        | 0.032 | 0.288 | 2.794 | 26.124    |
     | Haskell   | 0.021 | 0.135 | 1.259 | 12.528    |
     | Node.js   | 0.117 | 2.280 | DNF   | DNF       |
@@ -28,6 +29,7 @@ The timing portions of these tests are solely around the creation of the array a
 
 	Notes:
      C - gcc -O2, llvm compiling was no faster
+     Crystal (ruby syntax but compiled) - used compiled binary, was 441K on disk.
      Go - includes entire program time (TODO), now finishes with go1.1 (64-bit)
      Haskell - includes entire program time (TODO)
      Node - processes limited to 1.7gb, did not finish > 10 million
@@ -39,6 +41,7 @@ The timing portions of these tests are solely around the creation of the array a
 
     Versions:
      C - gcc version 4.2.1 (test compiled with -O2)
+     Crystal - 0.6.1
      Go - 1.1 darwin/amd64
      Haskell - 7.4.2, code was compiled and run (ghc)
      Node.js - v0.10.2
@@ -53,6 +56,18 @@ Here's a log of all the fun I had.
 
 ### C (contributed by @regexer)
 C was a PITA compared to the higher level languages.  But, no big surprise, was very fast.  Non-optimized (-O2) compilation was slower than Scala but then O2 made it faster than Scala.  I am more than willing to accept a better version of this test.  Especially one that dynamically allocates.
+
+### Crystal
+It's so Ruby-like that it wasn't too hard to get working.  You can't
+have an untyped array.  So it looks like this:
+
+    # nope, compile error
+    # array = []
+
+    # declare a type
+    array = [] of Number
+
+Some other tricks with the modulo math didn't work.  But it was pretty easy to fix and probably came out better.  You can compare the Ruby and the Crystal versions.
 
 ### Haskell (contributed by @sixohsix)
 Using an array-based implementation is not faster. Probably because you have to iterate 1B times to fill the array, just like the list. It may be better on memory though.
