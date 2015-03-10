@@ -17,10 +17,5 @@ size = array.count.to_s.reverse.gsub(/(\d{3})(?=\d)/, "\\1,").reverse
 puts "Done.  Array size is #{size}"
 
 elapsed = end_time - start_time
-# ms = elapsed.milliseconds
-# ss = elapsed.seconds
-# hh, mm = mm.divmod(60)
-# dd, hh = hh.divmod(24)
-
 puts elapsed.inspect
 
